@@ -34,7 +34,7 @@ export default function Home(){
                         </div>
                         <div className='post__utils-box'>
                             <div className='post__delete'>삭제</div>
-                            <div className='post__edit'>수정</div>
+                            <div className='post__edit'>수정.</div>
                         </div>
 
                         </Link>

@@ -73,7 +73,7 @@ footer a:focus, footer a :hover {
   padding:48px 20px 0px 20px;
 }
 
-.post_navigation--active {
+.post__navigation--active {
   color : black;
   font-weight: 600;
 }
@@ -143,13 +143,19 @@ footer a:focus, footer a :hover {
   color : black;
 }
 
+.post__detail {
+  cursor : pointer;
+}
+
 .post__delete:hover,
 .post__delete:focus {
   color : black;
 }
 
 .post__edit:hover,
-.post__edit:focus {
+.post__edit:focus,
+.post__edit a:hover,
+.post__edit a:focus {
   color : black;
 }
 
@@ -170,6 +176,10 @@ footer a:focus, footer a :hover {
 }
 .post__detail .post__text {
   padding : 20px 0px;
+}
+.post__edit a{
+  text-decoration: none;
+  color: gray;
 }
 
 /* profile */

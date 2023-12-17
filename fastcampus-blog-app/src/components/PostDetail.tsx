@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom"
+
 export default function PostDetail(){
+
+
     return <>
     <div className="post__detail">
         <div className="post__box">
@@ -11,7 +15,9 @@ export default function PostDetail(){
         </div>
         <div className='post__utils-box'>
             <div className='post__delete'>삭제</div>
-            <div className='post__edit'>수정.</div>
+            <div className='post__edit'>
+                <Link to={`/posts/edit/1`}>수정</Link>
+            </div>
         </div>
         <div className='post__text'>
         중앙선거관리위원회는 대통령이 임명하는 3인, 국회에서 선출하는 3인과 대법원장이 지명하는 3인의 위원으로 구성한다. 위원장은 위원중에서 호선한다.

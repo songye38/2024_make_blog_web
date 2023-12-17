@@ -433,3 +433,8 @@ input:checked + .carousel__slide-container .nav label {
 .form__link:focus {
   text-decoration: underline;
 }
+
+.form__error {
+  color : red;
+
+}

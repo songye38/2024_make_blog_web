@@ -24,7 +24,7 @@ function App() {
         setIsAuthenticated(false);
       }
       setInit(true);
-    })
+    });
   },[auth]);
   return (
     <>

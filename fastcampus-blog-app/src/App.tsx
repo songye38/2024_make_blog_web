@@ -9,8 +9,10 @@ import Router from "./components/Router";
 
 function App() {
   const auth = getAuth(app);
-  console.log(auth);
+  //auth를 체크하기 전에는 loader를 띄어주는 용도
+  const [init,setInit] = useState<boolean>(false);
 
+  //auth의 current user가 있으면 autehnticated로 바뀌는것.
   const [isAuthenticated,setIsAuthenticated] = useState<boolean>(!!auth?.currentUser);
 
   useEffect(()=>{
@@ -20,13 +22,13 @@ function App() {
       }else{
         setIsAuthenticated(false);
       }
+      setInit(true);
     })
-    
-  })
+  },[auth]);
   return (
     <>
       <ToastContainer />
-      <Router isAuthenticated = {isAuthenticated} />
+      {init ? <Router isAuthenticated = {isAuthenticated} /> : "init"}
     </>
 
   );

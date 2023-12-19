@@ -76,7 +76,7 @@ export default function PostList({hasNavigation=true}){
                     )}
             </div>
         ))
-        :'게시글이 없습니다.'}
+        :<div className="post__no-post">'게시글이 없습니다.'</div>}
     </div>
     </>
 

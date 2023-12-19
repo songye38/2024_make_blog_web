@@ -64,7 +64,7 @@ export default function PostList({hasNavigation=true}){
                     <div className='post__date'>{post?.createdAt}</div>
                 </div>
                 <div className='post__title'>게시글 {post?.title}</div>
-                <div className='post__text'>{post?.content}</div>
+                <div className='post__text'>{post?.summary}</div>
                 </Link>
                     {post?.email === user?.email && (
                         <div className='post__utils-box'>

@@ -129,6 +129,10 @@ footer a:focus, footer a :hover {
   color : gray;
   font-size:16px;
 }
+
+.post__text--prev-wrap {
+  white-space: prev-wrap;
+}
 .post__utils-box {
   display:flex;
   gap : 8px;
@@ -452,3 +456,12 @@ input:checked + .carousel__slide-container .nav label {
   border-radius : 50%;
   z-index: 9999;
 }
+.post__no-post {
+  padding : 24px;
+  text-align: center;
+  color : gray;
+  border : 1px solid gray;
+  border-radius : 20px;
+
+}
+

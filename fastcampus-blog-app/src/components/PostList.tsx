@@ -10,14 +10,14 @@ interface PostListProps {
 
 type TabType='all'|'my';
 
-interface PostProps {
-    id : string;
-    title : string;
-    email : string;
-    summary : string;
-    content : string;
-    createAt : string;
-}
+export interface PostProps {
+    id?: string;
+    title: string;
+    email: string;
+    summary: string;
+    content: string;
+    createdAt: string;
+  }
 
 export default function PostList({hasNavigation=true}){
     const [activeTab, setActiveTab] = useState<TabType>("all");
@@ -61,7 +61,7 @@ export default function PostList({hasNavigation=true}){
                 <div className='post__profile-box'>
                     <div className='post__profile'/>
                     <div className='post__author-name'>{post?.email}</div>
-                    <div className='post__date'>{post?.createAt}</div>
+                    <div className='post__date'>{post?.createdAt}</div>
                 </div>
                 <div className='post__title'>게시글 {post?.title}</div>
                 <div className='post__text'>{post?.content}</div>

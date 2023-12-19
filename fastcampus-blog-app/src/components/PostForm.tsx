@@ -20,7 +20,7 @@ export default function PostForm(){
                 title : title,
                 summary : summary,
                 content : content,
-                createAt : new Date()?.toLocaleDateString(),
+                createdAt : new Date()?.toLocaleDateString(),
                 email : user?.email,
 
             });

@@ -10,7 +10,7 @@ const AuthContext = createContext({
     user : null as User | null,
 });
 
-export const AuthContextProvide = ({children}:AuthProps) =>{
+export const AuthContextProvider = ({children}:AuthProps) =>{
     const auth = getAuth(app);
     const [currentUser,setCurrentUser] = useState<User | null>(null);
 

@@ -71,6 +71,14 @@ export default function PostForm(){
         if(params?.id) getPost(params?.id);
     },[params?.id]);
 
+    useEffect(()=>{
+        if (post){
+            setTitle(post?.title);
+            setSummary(post?.summary);
+            setContent(post?.content);
+        }
+    },[post])
+
 
     return <form onSubmit={onSubmit} className="form">
         <div className="form__block">

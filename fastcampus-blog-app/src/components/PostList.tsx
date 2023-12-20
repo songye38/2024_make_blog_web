@@ -17,6 +17,8 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     summary: string;
     content: string;
     createdAt: string;
+    updatedAt? : string;
+    uid : string;
   }
 
 export default function PostList({hasNavigation=true}){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용

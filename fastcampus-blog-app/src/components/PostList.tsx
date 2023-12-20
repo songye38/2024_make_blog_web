@@ -65,7 +65,7 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
                     <div className='post__author-name'>{post?.email}</div>
                     <div className='post__date'>{post?.createdAt}</div>
                 </div>
-                <div className='post__title'>게시글 {post?.title}</div>
+                <div className='post__title'>{post?.title}</div>
                 <div className='post__text'>{post?.summary}</div>
                 </Link>
                     {post?.email === user?.email && (

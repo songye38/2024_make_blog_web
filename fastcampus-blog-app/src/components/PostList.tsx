@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 interface PostListProps {
     hasNavigation ? : boolean;
+    defaultTab ? : TabType;
 }
 
 type TabType='all'|'my';
@@ -22,8 +23,8 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     uid : string;
   }
 
-export default function PostList({hasNavigation=true}){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
-    const [activeTab, setActiveTab] = useState<TabType>("all");
+export default function PostList({hasNavigation=true,defaultTab='all'}:PostListProps){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
+    const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
     const [posts,setPosts] = useState<PostProps[]>([]);
     const {user} = useContext(AuthContext);
 

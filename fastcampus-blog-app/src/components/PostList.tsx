@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 interface PostListProps {
     hasNavigation ? : boolean;
-    defaultTab ? : TabType;
+    defaultTab ? : TabType | CategoryType;
 }
 
 type TabType='all'|'my';
@@ -21,10 +21,14 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     createdAt: string;
     updatedAt? : string;
     uid : string;
+    category ? : CategoryType;
   }
 
+export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';
+export const CATEGORIES : CategoryType[] = ["Frontend", "Backend", "Web", "Native"];
+
 export default function PostList({hasNavigation=true,defaultTab='all'}:PostListProps){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
-    const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
+    const [activeTab, setActiveTab] = useState<TabType | CategoryType>(defaultTab);
     const [posts,setPosts] = useState<PostProps[]>([]);
     const {user} = useContext(AuthContext);
 
@@ -38,8 +42,13 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
             postQuery = query(postRef,
                 where('uid','==',user.uid),
                 orderBy('createdAt','asc'));
-        }else{
+        }else if(activeTab=='all'){
             postQuery = query(postRef,orderBy('createdAt','asc'));
+        }else {
+            postQuery = query(postRef,
+                where('category','==',activeTab),
+                orderBy('createdAt','asc'));
+
         }
         
         const datas = await getDocs(postQuery);
@@ -80,6 +89,14 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
                 onClick={()=>setActiveTab("my")}
                 className={activeTab ==='my' ? 'post__navigation--active':""}>나의글
                 </div>
+                {CATEGORIES?.map((category)=>(
+                    <div 
+                    key = {category}
+                    role='presentation'
+                    onClick={()=>setActiveTab(category)}
+                    className={activeTab ===category ? 'post__navigation--active':""}>{category}
+                    </div>
+                ))}
             </div>
         )}
         <div className='post__list'>

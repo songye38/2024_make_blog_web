@@ -21,7 +21,11 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     createdAt: string;
     updatedAt? : string;
     uid : string;
+    category ? : CategoryType;
   }
+
+export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';
+export const CATEGORIES : CategoryType[] = ["Frontend", "Backend", "Web", "Native"];
 
 export default function PostList({hasNavigation=true,defaultTab='all'}:PostListProps){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
     const [activeTab, setActiveTab] = useState<TabType>(defaultTab);

@@ -6,6 +6,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PostProps } from "./PostList";
 
+
 export default function PostForm(){
     const params = useParams();
     const [post,setPost] = useState<PostProps|null>(null);
@@ -107,6 +108,10 @@ export default function PostForm(){
         <div className="form__block">
             <label htmlFor="title">제목</label>
             <input type='text' name='title' id='title' required value={title} onChange={onChange}/>
+        </div>
+        <div className="form__block">
+            <label htmlFor="category">카테고리</label>
+            <input type='text' name='category' id='category' required value={title} onChange={onChange}/>
         </div>
         <div className="form__block">
             <label htmlFor="summary">요약</label>

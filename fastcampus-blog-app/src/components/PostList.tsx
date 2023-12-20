@@ -36,9 +36,8 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
         if(activeTab==='my' && user){
             //나의 글만 필터링해서 보여주기
             postQuery = query(postRef,
-                where('uid','==','user.uid'),
+                where('uid','==',user.uid),
                 orderBy('createdAt','asc'));
-            
         }else{
             postQuery = query(postRef,orderBy('createdAt','asc'));
         }
@@ -64,7 +63,7 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
 
     useEffect(()=>{ //렌더링 이후 마운팅될 때 실행된다. 
         getPosts(); //그렇기에 useEffect안에는 초기화 작업을 수행하는 함수가 들어오는 것이 좋다.
-    },[]);  //빈 배열이 있다는 것은 렌더링 이후 한번만 실행된다는 것. 배열 안에 상태에 따라 값이 바뀌는 요소가 들어오면 그 값이 바뀔때마다 안에 있는 함수가 실행된다.
+    },[activeTab]);  //빈 배열이 있다는 것은 렌더링 이후 한번만 실행된다는 것. 배열 안에 상태에 따라 값이 바뀌는 요소가 들어오면 그 값이 바뀔때마다 안에 있는 함수가 실행된다.
 
 
     return (

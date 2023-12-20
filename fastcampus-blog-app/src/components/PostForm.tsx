@@ -1,17 +1,20 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { db } from "firebaseApp";
-import {collection,addDoc} from 'firebase/firestore';
+import {collection,addDoc, doc, getDoc} from 'firebase/firestore';
 import AuthContext from "context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { PostProps } from "./PostList";
 
 export default function PostForm(){
-
+    const params = useParams();
+    const [post,setPost] = useState<PostProps|null>(null);
     const [title,setTitle] = useState<string>('');
     const [summary,setSummary] = useState<string>('');
     const [content,setContent] = useState<string>('');
     const {user} = useContext(AuthContext);
     const navigate = useNavigate();
+    console.log(post);
 
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
@@ -51,6 +54,22 @@ export default function PostForm(){
         setContent(value);
     }
     }
+    const getPost = async (id : string)=>{
+        if(id){
+            const docRef = doc(db,'posts',id);
+            const docSnap = await getDoc(docRef);
+            
+            setPost({ id: docSnap.id, ...(docSnap.data() as PostProps) });
+            // setPost([{ id: docSnap.id, ...(docSnap.data()) as PostProps }]);
+
+        } 
+    };
+
+    console.log(post);
+
+    useEffect(()=>{
+        if(params?.id) getPost(params?.id);
+    },[params?.id]);
 
 
     return <form onSubmit={onSubmit} className="form">

@@ -10,8 +10,8 @@ interface PostListProps {
 
 type TabType='all'|'my';
 
-export interface PostProps {
-    id?: string;
+export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사용할 때도 중괄호 안에서 여러개를 사용 가능.
+    id?: string; //선택적 프로퍼티 있을수도 있고 없을수도 있다. 없어도 에러가 안남.
     title: string;
     email: string;
     summary: string;
@@ -19,7 +19,7 @@ export interface PostProps {
     createdAt: string;
   }
 
-export default function PostList({hasNavigation=true}){
+export default function PostList({hasNavigation=true}){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
     const [activeTab, setActiveTab] = useState<TabType>("all");
     const [posts,setPosts] = useState<PostProps[]>([]);
     const {user} = useContext(AuthContext);
@@ -28,14 +28,14 @@ export default function PostList({hasNavigation=true}){
         const datas = await getDocs(collection(db,'posts'));
         datas?.forEach((doc)=>{
             console.log(doc.data(),doc.id);
-            const dataObj = {...doc.data(),id:doc.id}
-            setPosts((prev)=>[...prev,dataObj as PostProps]);
-        })
+            const dataObj = {...doc.data(),id:doc.id} //깊은 복사로 doc.data()에 있는 내용을 복사하고 id를 추가해서 새로운 객체를 만든다.
+            setPosts((prev)=>[...prev,dataObj as PostProps]);  //... -> 전개 연산자 기존 객체나 배열의 변경 없이 새로운 객체나 배열을 만들 수 있다. 
+        }) 
     }
 
-    useEffect(()=>{
-        getPosts();
-    },[]);
+    useEffect(()=>{ //렌더링 이후 마운팅될 때 실행된다. 
+        getPosts(); //그렇기에 useEffect안에는 초기화 작업을 수행하는 함수가 들어오는 것이 좋다.
+    },[]);  //빈 배열이 있다는 것은 렌더링 이후 한번만 실행된다는 것. 배열 안에 상태에 따라 값이 바뀌는 요소가 들어오면 그 값이 바뀔때마다 안에 있는 함수가 실행된다.
 
 
     return (

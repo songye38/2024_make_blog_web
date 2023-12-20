@@ -1,5 +1,5 @@
 import AuthContext from "context/AuthContext";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "firebaseApp";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -28,8 +28,10 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
     const {user} = useContext(AuthContext);
 
     const getPosts = async ()=>{
-        const datas = await getDocs(collection(db,'posts'));
         setPosts([]);
+        let postRef = collection(db,'posts');
+        let postQuery = query(postRef,orderBy('createdAt','asc'));
+        const datas = await getDocs(postQuery);
         datas?.forEach((doc)=>{
             console.log(doc.data(),doc.id);
             const dataObj = {...doc.data(),id:doc.id} //깊은 복사로 doc.data()에 있는 내용을 복사하고 id를 추가해서 새로운 객체를 만든다.

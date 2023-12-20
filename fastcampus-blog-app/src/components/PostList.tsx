@@ -1,8 +1,9 @@
 import AuthContext from "context/AuthContext";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "firebaseApp";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface PostListProps {
     hasNavigation ? : boolean;
@@ -28,12 +29,24 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
 
     const getPosts = async ()=>{
         const datas = await getDocs(collection(db,'posts'));
+        setPosts([]);
         datas?.forEach((doc)=>{
             console.log(doc.data(),doc.id);
             const dataObj = {...doc.data(),id:doc.id} //깊은 복사로 doc.data()에 있는 내용을 복사하고 id를 추가해서 새로운 객체를 만든다.
             setPosts((prev)=>[...prev,dataObj as PostProps]);  //... -> 전개 연산자 기존 객체나 배열의 변경 없이 새로운 객체나 배열을 만들 수 있다. 
         }) 
     }
+
+    const handleDelete = async (id:string)=>{
+        const confirm = window.confirm("삭제하시겠습니까?");
+        if (confirm && id){
+            await deleteDoc(doc(db,'posts',id));
+        }
+        toast.success('삭제되었습니다.');
+        getPosts();
+    };
+
+
 
     useEffect(()=>{ //렌더링 이후 마운팅될 때 실행된다. 
         getPosts(); //그렇기에 useEffect안에는 초기화 작업을 수행하는 함수가 들어오는 것이 좋다.
@@ -70,7 +83,7 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
                 </Link>
                     {post?.email === user?.email && (
                         <div className='post__utils-box'>
-                            <div className='post__delete'>삭제</div>
+                            <div className='post__delete' role="presentation" onClick={()=>handleDelete(post.id as string)}>삭제</div>
                             <div className='post__edit'>
                                 <Link to={`/posts/edit/${post?.id}`}>수정</Link>
                             </div>

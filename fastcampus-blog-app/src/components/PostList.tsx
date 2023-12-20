@@ -1,5 +1,5 @@
 import AuthContext from "context/AuthContext";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "firebaseApp";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 interface PostListProps {
     hasNavigation ? : boolean;
+    defaultTab ? : TabType;
 }
 
 type TabType='all'|'my';
@@ -22,14 +23,26 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     uid : string;
   }
 
-export default function PostList({hasNavigation=true}){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
-    const [activeTab, setActiveTab] = useState<TabType>("all");
+export default function PostList({hasNavigation=true,defaultTab='all'}:PostListProps){ //기본적으로 하나만 내보낼 수 있고 중괄호 없이 사용
+    const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
     const [posts,setPosts] = useState<PostProps[]>([]);
     const {user} = useContext(AuthContext);
 
     const getPosts = async ()=>{
-        const datas = await getDocs(collection(db,'posts'));
         setPosts([]);
+        let postRef = collection(db,'posts');
+        let postQuery;
+        
+        if(activeTab==='my' && user){
+            //나의 글만 필터링해서 보여주기
+            postQuery = query(postRef,
+                where('uid','==',user.uid),
+                orderBy('createdAt','asc'));
+        }else{
+            postQuery = query(postRef,orderBy('createdAt','asc'));
+        }
+        
+        const datas = await getDocs(postQuery);
         datas?.forEach((doc)=>{
             console.log(doc.data(),doc.id);
             const dataObj = {...doc.data(),id:doc.id} //깊은 복사로 doc.data()에 있는 내용을 복사하고 id를 추가해서 새로운 객체를 만든다.
@@ -50,7 +63,7 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
 
     useEffect(()=>{ //렌더링 이후 마운팅될 때 실행된다. 
         getPosts(); //그렇기에 useEffect안에는 초기화 작업을 수행하는 함수가 들어오는 것이 좋다.
-    },[]);  //빈 배열이 있다는 것은 렌더링 이후 한번만 실행된다는 것. 배열 안에 상태에 따라 값이 바뀌는 요소가 들어오면 그 값이 바뀔때마다 안에 있는 함수가 실행된다.
+    },[activeTab]);  //빈 배열이 있다는 것은 렌더링 이후 한번만 실행된다는 것. 배열 안에 상태에 따라 값이 바뀌는 요소가 들어오면 그 값이 바뀔때마다 안에 있는 함수가 실행된다.
 
 
     return (

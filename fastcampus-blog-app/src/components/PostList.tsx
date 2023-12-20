@@ -91,6 +91,7 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
                 </div>
                 {CATEGORIES?.map((category)=>(
                     <div 
+                    key = {category}
                     role='presentation'
                     onClick={()=>setActiveTab(category)}
                     className={activeTab ===category ? 'post__navigation--active':""}>{category}

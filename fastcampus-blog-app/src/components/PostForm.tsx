@@ -35,8 +35,9 @@ export default function PostForm(){
 
 
     const onChange  = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {target : {name, value},
+        const {target : {name, value}
     } = e;
+
 
     if (name==='title'){
         setTitle(value);

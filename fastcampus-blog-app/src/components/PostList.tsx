@@ -42,8 +42,13 @@ export default function PostList({hasNavigation=true,defaultTab='all'}:PostListP
             postQuery = query(postRef,
                 where('uid','==',user.uid),
                 orderBy('createdAt','asc'));
-        }else{
+        }else if(activeTab=='all'){
             postQuery = query(postRef,orderBy('createdAt','asc'));
+        }else {
+            postQuery = query(postRef,
+                where('category','==',activeTab),
+                orderBy('createdAt','asc'));
+
         }
         
         const datas = await getDocs(postQuery);

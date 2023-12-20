@@ -19,3 +19,5 @@ export const ThemeContextProvider = ({children}:ThemeProps)=>{
         {children}
     </ThemeContext.Provider>
 };
+
+export default ThemeContext;

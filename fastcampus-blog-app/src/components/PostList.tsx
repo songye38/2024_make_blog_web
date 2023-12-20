@@ -1,5 +1,5 @@
 import AuthContext from "context/AuthContext";
-import { collection, deleteDoc, doc, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "firebaseApp";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -30,7 +30,18 @@ export default function PostList({hasNavigation=true}){ //기본적으로 하나
     const getPosts = async ()=>{
         setPosts([]);
         let postRef = collection(db,'posts');
-        let postQuery = query(postRef,orderBy('createdAt','asc'));
+        let postQuery;
+        
+        if(activeTab==='my' && user){
+            //나의 글만 필터링해서 보여주기
+            postQuery = query(postRef,
+                where('uid','==','user.uid'),
+                orderBy('createdAt','asc'));
+            
+        }else{
+            postQuery = query(postRef,orderBy('createdAt','asc'));
+        }
+        
         const datas = await getDocs(postQuery);
         datas?.forEach((doc)=>{
             console.log(doc.data(),doc.id);

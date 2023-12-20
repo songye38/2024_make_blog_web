@@ -1,16 +1,25 @@
-import { Link ,useParams} from "react-router-dom"
+import { Link ,useParams,useNavigate} from "react-router-dom"
 import { useState,useEffect } from "react";
 import { PostProps } from "./PostList";
 import { db } from "firebaseApp";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 export default function PostDetail(){
     const [post, setPost] = useState<PostProps | null>(null);
+    const navigate = useNavigate();
 
     const params = useParams();
 
-    const handleDelete = ()=>{
+    const handleDelete = async ()=>{
+      //컨펌을 받고 지우기
+      const confirm = window.confirm('정말 지우시겠습니까?');
+      if (confirm && post && post.id){
+        await deleteDoc(doc(db,'posts',post.id))
+        toast.success('삭제되었습니다.');
+        navigate('/');
+      }
 
     }
 

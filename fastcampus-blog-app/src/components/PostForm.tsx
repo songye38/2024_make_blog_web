@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { db } from "firebaseApp";
-import {collection,addDoc, doc, getDoc} from 'firebase/firestore';
+import {collection,addDoc, doc, getDoc,updateDoc} from 'firebase/firestore';
 import AuthContext from "context/AuthContext";
 import { useNavigate,useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,17 +19,32 @@ export default function PostForm(){
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         try{
-            await addDoc(collection(db,'posts'),{
-                title : title,
-                summary : summary,
-                content : content,
-                createdAt : new Date()?.toLocaleDateString(),
-                email : user?.email,
+            if(post && post.id){
+                //firebase로 데이터 수정 로직 추가
+                const postRef = doc(db,'posts',post?.id)
+                await updateDoc(postRef,{
+                    title : title,
+                    summary : summary,
+                    content : content,
+                    updatedAt : new Date()?.toLocaleDateString(),
+                });
 
-            });
-            toast?.success("게시글을 생성했습니다.")
-            navigate('/');
-
+                toast?.success('게시글을 수정했습니다.')
+                navigate(`/posts/${post.id}`);
+            }else{
+                await addDoc(collection(db,'posts'),{
+                    title : title,
+                    summary : summary,
+                    content : content,
+                    createdAt : new Date()?.toLocaleDateString(),
+                    email : user?.email,
+                    uid : user?.uid,
+    
+                });
+                toast?.success("게시글을 생성했습니다.")
+                navigate('/');
+            }
+    
         }catch(error:any){
             toast.error(error?.code);
 

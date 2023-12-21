@@ -541,6 +541,46 @@ input:checked + .carousel__slide-container .nav label {
 }
 
 
+/* comment list */
+.comments__list {
+  margin-top : 40px;
+  margin-bottom : 100px;
+}
+.comment__box {
+  padding : 12px 0px;
+  border-bottom : 1px solid #f2f2f2;
+}
+
+.comment__profile-box {
+  display: flex;
+  gap : 10px;
+  align-items: center;
+  font-size : 12px;
+}
+
+.comment__email {
+  font-weight : 500;
+}
+.comment__date {
+  color : gray;
+}
+.comment__delete {
+  color : gray;
+  font-size :12px;
+  cursor : pointer;
+  text-decoration: underline;
+}
+.comment__delete:focus,
+.comment__delete:hover {
+  color : black;
+}
+
+.comment__text {
+  font-size : 14px;
+  padding-top : 4px;
+}
+
+
 /* dark mode */
 
 .white {
@@ -564,7 +604,8 @@ input:checked + .carousel__slide-container .nav label {
 .dark .post__title,
 .dark .post__author-name,
 .dark .footer__theme-btn,
-.dark .profile__name{
+.dark .profile__name,
+.comments__list{
   color : white;
 }
 
@@ -574,11 +615,18 @@ input:checked + .carousel__slide-container .nav label {
 .dark .post__text--prev-wrap,
 .dark .profile__email,
 .dark .post__date,
-.dark .form__block {
+.dark .form__block,
+.dark .comment__date,
+.dark .comment__delete {
   color : lightgray;
 }
 .dark .form__error {
   color : #ff6a71;
+}
+
+.dark .comment__delete:hover,
+.dark .comment__delete:focus {
+  color: white;
 }
 
 .dark footer,

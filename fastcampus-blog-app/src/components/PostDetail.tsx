@@ -6,6 +6,7 @@ import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import Loader from "./Loader";
 import { toast } from "react-toastify";
 import Comments from "./Comments";
+import PostForm from "./PostForm";
 
 export default function PostDetail(){
     const [post, setPost] = useState<PostProps | null>(null);
@@ -73,7 +74,7 @@ export default function PostDetail(){
                   {post?.content}
                 </div>
               </div>
-              <Comments />
+              <Comments post = {post} />
               </>
             ) : (
               <Loader />

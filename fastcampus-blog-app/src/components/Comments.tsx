@@ -92,7 +92,7 @@ export default function Comments({post}:CommentProps){
     };
     return (
         <div className="comments">
-        <form className="comments__form">
+        <form className="comments__form" onSubmit = {onSubmit}>
             <div className="form__block">
                 <label htmlFor="comment">댓글입력</label>
                 <textarea name='comment' id='comment' required value={comment} onChange={onChange}/>

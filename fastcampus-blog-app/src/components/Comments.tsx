@@ -6,39 +6,6 @@ import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 
 
-const COMMENTS = [
-    {
-        id : 1,
-        email : "vsongyev@hanmail.net",
-        content : '댓글입니다 1',
-        createdAt : '2023-12-22',
-    },
-    {
-        id : 2,
-        email : "vsongyev@hanmail.net",
-        content : '댓글입니다 2',
-        createdAt : '2023-12-22',
-    },
-    {
-        id : 3,
-        email : "vsongyev@hanmail.net",
-        content : '댓글입니다 3',
-        createdAt : '2023-12-22',
-    },
-    {
-        id : 4,
-        email : "vsongyev@hanmail.net",
-        content : '댓글입니다 4',
-        createdAt : '2023-12-22',
-    },
-    {
-        id : 5,
-        email : "vsongyev@hanmail.net",
-        content : '댓글입니다 5',
-        createdAt : '2023-12-22',
-    },
-]
-
 interface CommentProps {
     post : PostProps;
 }
@@ -102,8 +69,8 @@ export default function Comments({post}:CommentProps){
             </div>
         </form>
         <div className="comments__list">
-            {COMMENTS?.map((comment)=>(
-                <div key={comment.id} className="comment__box">
+            {post?.comments?.map((comment)=>(
+                <div key={comment.createdAt} className="comment__box">
                     <div className="comment__profile-box">
                         <div className="comment__email">{comment?.email}</div>
                         <div className="comment__date">{comment?.createdAt}</div>

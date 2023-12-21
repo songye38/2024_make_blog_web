@@ -8,9 +8,10 @@ import { toast } from "react-toastify";
 
 interface CommentProps {
     post : PostProps;
+    getPost : (id : string)=> Promise<void>;
 }
 
-export default function Comments({post}:CommentProps){
+export default function Comments({post,getPost}:CommentProps){
     const [comment,setComment] = useState("")
     const {user} = useContext(AuthContext); //사용자 정보를 context를 통해 가져옴.
     const onChange =(e : React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -46,9 +47,10 @@ export default function Comments({post}:CommentProps){
                         minute : '2-digit',
                         second : '2-digit',
                     }),
-                })
-                };
-
+                });
+                //문서 업데이트
+                await getPost(post.id);
+                }
             }
         toast.success('댓글을 생성했습니다.')
         setComment("");

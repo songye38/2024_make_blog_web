@@ -5,6 +5,15 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
+export interface CommentsInterface {
+    content : string;
+    uid : string;
+    email : string;
+    createdAt : string;
+
+}
+
 interface PostListProps {
     hasNavigation ? : boolean;
     defaultTab ? : TabType | CategoryType;
@@ -22,6 +31,7 @@ export interface PostProps { //여러개의 항목을 내보낼 때 사용 , 사
     updatedAt? : string;
     uid : string;
     category ? : CategoryType;
+    comments? : CommentsInterface[];
   }
 
 export type CategoryType = 'Frontend' | 'Backend' | 'Web' | 'Native';

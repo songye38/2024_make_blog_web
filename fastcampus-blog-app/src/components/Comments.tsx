@@ -71,7 +71,7 @@ export default function Comments({post,getPost}:CommentProps){
             </div>
         </form>
         <div className="comments__list">
-            {post?.comments?.map((comment)=>(
+            {post?.comments?.slice(0)?.reverse().map((comment)=>(
                 <div key={comment.createdAt} className="comment__box">
                     <div className="comment__profile-box">
                         <div className="comment__email">{comment?.email}</div>

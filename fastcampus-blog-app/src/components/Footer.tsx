@@ -13,7 +13,7 @@ export default function Footer(){
                 <Link to="/profile">프로필</Link>
             </div>
             <div>
-                {context.theme ==='light' ? <BsSun /> : <BsMoonFill />}
+                {context.theme ==='light' ? <BsSun onClick={context.toggleMode}  className="footer__theme-btn"/> : <BsMoonFill onClick={context.toggleMode} className="footer__theme-btn" />}
             </div>
             </footer>
     );

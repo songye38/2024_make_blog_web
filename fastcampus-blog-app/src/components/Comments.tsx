@@ -57,7 +57,7 @@ export default function Comments(){
                 <label htmlFor="comment">댓글입력</label>
                 <textarea name='comment' id='comment' required value={comment} onChange={onChange}/>
             </div>
-            <div className="form__block">
+            <div className="form__block form__block-reverse">
                 <input type='submit' value='입력' className="form__btn-submit"/>
             </div>
         </form>
